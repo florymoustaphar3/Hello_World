@@ -8,16 +8,28 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-  say-hellos:
+  print_hey:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - run:
-          name: "We Say hello"
-          command: "echo Salut!, World!"        
+          name: "Say hey"
+          command: "echo Hey, World!"
+  print_world:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "How far world"
+          command: "echo , World!"
+
 workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-      - say-hellos
+      - print_hey:
+          requires:
+           - say-hello
+      - print_world
