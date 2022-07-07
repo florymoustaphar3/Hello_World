@@ -1,8 +1,6 @@
 version: 2.1
-
 jobs:
   say-hello:
-    
     docker:
       - image: cimg/base:stable
     steps:
@@ -10,20 +8,16 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-
   say-hellos:
-    
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - run:
           name: "We Say hello"
-          command: "echo Hello, World!"        
-
+          command: "echo Salut!, World!"        
 workflows:
   say-hello-workflow:
     jobs:
       - say-hello
       - say-hellos
-      - say-hello
