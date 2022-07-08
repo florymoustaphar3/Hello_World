@@ -12,6 +12,10 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - run:
+          name: "echo an env var that is part of my second jobs in a project"
+          command: |
+            echo $MY_ENV_VAR # this env var must be set within the project
       - restore_cache:
           keys:
             - v1-my-project-{{ checksum "project.clj" }}
