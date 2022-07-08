@@ -22,8 +22,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "How far world"
-          command: "echo , World!"
+          name: "echo an env var that is part of our project"
+          command: |
+            echo $MY_ENV_VAR # this env var must be set within the project
 
 workflows:
   say-hello-workflow:
