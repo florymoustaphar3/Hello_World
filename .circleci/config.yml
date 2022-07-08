@@ -4,18 +4,19 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      - run: <"echo Hello, World!"> ~/output.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
   print_hey:
     docker:
       - image: cimg/base:stable
     steps:
-      - checkout
-      - run:
-          name: "Say hey"
-          command: "echo Hey, World!"
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/output.txt
+
   print_world:
     docker:
       - image: cimg/base:stable
