@@ -1,35 +1,36 @@
 version: 2.1
-
 jobs:
-  save_hello_world_output:
+  say-hello:
     docker:
-       - image: cimg/base:2022.03
+      - image: cimg/base:stable
     steps:
-      - run: echo "hello world" > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
+      - save_cache:
+          key: v1-my-project-{{ checksum "Hello_World" }}
           paths:
-            - output.txt
-
-  print_output_file:
+            - ~/.m2
+  print_hey:
     docker:
-      - image: cimg/base:2022.03
+      - image: cimg/base:stable
     steps:
-      - attach_workspace:
-          at: ~/
-      - checkout    
-      - run: cat ~/output.txt
+      - restore_cache:
+          keys:
+            - v1-my-project-{{ checksum "Hello_World" }}
+            - v1-my-project-
+
+  print_world:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
       - run:
           name: "echo an env var that is part of our project"
           command: |
             echo $MY_ENV_VAR # this env var must be set within the project
 
- 
-
 workflows:
-  my_workflow:
+  say-hello-workflow:
     jobs:
-      - save_hello_world_output
-      - print_output_file:
-          requires:
-            - save_hello_world_output
+       - say-hello
+       - print_hey
+       - print_world
+           
