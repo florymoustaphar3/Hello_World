@@ -1,36 +1,31 @@
 version: 2.1
 jobs:
-  say-hello:
+  save_hello_world_output:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:13.8.0
     steps:
-      - run: <echo "hello world"> ~/output.txt
+      - run: echo "hello world" > ~/output.txt
       - persist_to_workspace:
           root: ~/
           paths:
             - output.txt
-  print_hey:
+      - run: exit 1
+      - run:
+          name: on error
+          command: echo "Hello Error!"
+          when: on_fail
+
+  print_output_file:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:13.8.0
     steps:
       - attach_workspace:
           at: ~/
       - run: cat ~/output.txt
-
-  print_world:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "echo an env var that is part of our project"
-          command: |
-            echo $MY_ENV_VAR # this env var must be set within the project
-
 workflows:
-  say-hello-workflow:
+  my_workflow:
     jobs:
-       - say-hello
-       - print_hey
-       - print_world
-           
+      - save_hello_world_output
+      - print_output_file:
+          requires:
+            - save_hello_world_output
