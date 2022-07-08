@@ -4,18 +4,18 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - save_cache:
-          key: v1-my-project-{{ checksum "Hello_World" }}
+      - run: <echo "hello world"> ~/output.txt
+      - persist_to_workspace:
+          root: ~/
           paths:
-            - ~/.m2
+            - output.txt
   print_hey:
     docker:
       - image: cimg/base:stable
     steps:
-      - restore_cache:
-          keys:
-            - v1-my-project-{{ checksum "Hello_World" }}
-            - v1-my-project-
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/output.txt
 
   print_world:
     docker:
