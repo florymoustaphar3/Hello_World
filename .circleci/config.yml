@@ -9,8 +9,8 @@ jobs:
           root: ~/
           paths:
             - output.txt
-            
-  print_hey:
+
+  print_output_file:
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -22,4 +22,4 @@ workflows:
   say-hello-workflow:
     jobs:
        - say-hello
-       - print_hey
+       - print_output_file
