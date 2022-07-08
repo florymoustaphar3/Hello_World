@@ -5,7 +5,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - save_cache:
-          key: v1-my-project-{{ checksum "project.clj" }}
+          key: v1-my-project-{{ checksum "Hello_World" }}
           paths:
             - ~/.m2
   print_hey:
@@ -18,7 +18,7 @@ jobs:
             echo $MY_ENV_VAR # this env var must be set within the project
       - restore_cache:
           keys:
-            - v1-my-project-{{ checksum "project.clj" }}
+            - v1-my-project-{{ checksum "Hello_World" }}
             - v1-my-project-
 
   print_world:
