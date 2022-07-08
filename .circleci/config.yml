@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   save_hello_world_output:
     docker:
-       - image: cimg/base:stable
+       - image: cimg/base:2022.03
     steps:
       - run: echo "hello world" > ~/output.txt
       - persist_to_workspace:
@@ -13,12 +13,12 @@ jobs:
 
   print_output_file:
     docker:
-       - image: cimg/base:stable
+      - image: cimg/base:2022.03
     steps:
       - attach_workspace:
           at: ~/
+      - checkout    
       - run: cat ~/output.txt
-      - checkout
       - run:
           name: "echo an env var that is part of our project"
           command: |
