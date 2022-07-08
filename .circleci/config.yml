@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   say-hello:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:13.8.0
     steps:
       - run: echo "hello world"> ~/output.txt
       - persist_to_workspace:
@@ -11,7 +11,7 @@ jobs:
             - output.txt
   print_hey:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:13.8.0
     steps:
       - attach_workspace:
           at: ~/
